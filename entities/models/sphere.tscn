@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0r8kbrad4vc4"]
+[gd_scene load_steps=2 format=3 uid="uid://dw6j8u5mi8ki1"]
 
-[ext_resource type="Script" path="res://entities/models/sphere.gd" id="1_5tben"]
+[ext_resource type="PackedScene" uid="uid://c2a2khcsp1003" path="res://entities/models/sphere.gltf" id="1_5xfwm"]
 
-[node name="sphere" type="Node2D"]
-script = ExtResource("1_5tben")
+[node name="sphere" type="Node3D"]
+
+[node name="sphere" parent="." instance=ExtResource("1_5xfwm")]
