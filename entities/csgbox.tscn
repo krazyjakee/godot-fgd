@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dynyolgx1c63y"]
 
 [node name="Node3D" type="Node3D"]
+metadata/metadata_string = ""
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]

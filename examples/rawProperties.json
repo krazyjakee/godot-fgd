@@ -1,0 +1,45 @@
+{
+  "entities/csgbox.tscn": [],
+  "entities/other/spatial.gd": [
+    {
+      "class_name": "",
+      "hint": 0,
+      "hint_string": "bool",
+      "name": "_bool",
+      "type": 1,
+      "usage": 4102
+    },
+    {
+      "class_name": "",
+      "hint": 0,
+      "hint_string": "String",
+      "name": "_string",
+      "type": 4,
+      "usage": 4102
+    },
+    {
+      "class_name": "",
+      "hint": 0,
+      "hint_string": "int",
+      "name": "_int",
+      "type": 2,
+      "usage": 4102
+    },
+    {
+      "class_name": "",
+      "hint": 0,
+      "hint_string": "float",
+      "name": "_float",
+      "type": 3,
+      "usage": 4102
+    },
+    {
+      "class_name": "",
+      "hint": 0,
+      "hint_string": "Color",
+      "name": "_color",
+      "type": 20,
+      "usage": 4102
+    }
+  ]
+}
