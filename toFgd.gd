@@ -95,6 +95,7 @@ func type_converter(type: int):
     3: "float",
     4: "string",
     20: "color",
+    27: "flags",
     28: "choices"
   }
   return types[type] if type in types else "string"
@@ -107,21 +108,33 @@ func value_converter(type: int, value: Variant):
     return "1" if value else "0"
   elif type == 20:
     return "\"%s %s %s\"" % [value.r, value.g, value.b]
+  elif type == 27:
+    var fgd_values = []
+    var count = 1
+    for key in value:
+      var v = 1 if value[key] else 0
+      fgd_values.append("    %s : \"%s\" : %s\n" % [count, key, v])
+      if count > 1:
+        count *= count
+      else:
+        count += 1
+    
+    return "[\n%s  ]" % "".join(PackedStringArray(fgd_values))
   elif type == 28: # Array (but only string array is supported)
     var fgd_values = []
     for i in value.size():
       var v = value[i]
-      fgd_values.append("%s : \"%s\"\n" % [i, v])
+      fgd_values.append("    %s : \"%s\"\n" % [i, v])
     
-    return "0 = [\n%s]" % "".join(PackedStringArray(fgd_values))
+    return "0 = [\n%s  ]" % "".join(PackedStringArray(fgd_values))
   else:
     return value
 
-func get_property_by_name(name, properties = [], default_value = null):
+func get_property_value_by_name(name, properties = [], default_value = null):
   # Get the properties by name
   for property in properties:
     if property.name == name:
-      return property
+      return property.default_value
   return default_value
 
 func set_property_by_name(name, value, properties = []):
@@ -167,14 +180,15 @@ func create_entity(path, properties = []):
     return null
   # Header
   # Example: @PointClass size(-4 -4 -4, 4 4 4) color(255 255 0) model({ "path": ":progs/player.mdl" }) = light : "Light" [
-  var fgd_size = get_property_by_name("fgd_size", properties, 4)
-  var fgd_color = get_property_by_name("fgd_color", properties, "(0 255 0)")
-  var fgd_model = get_property_by_name("fgd_model", properties, "")
+  var fgd_size = get_property_value_by_name("fgd_size", properties, 4)
+  var fgd_color = get_property_value_by_name("fgd_color", properties, "(0 255 0)")
+  var fgd_model = get_property_value_by_name("fgd_model", properties, "")
+  var fgd_block = get_property_value_by_name("fgd_block", properties, [])
 
   var entity_name_properties = path_parser(path)
   var entity_name = entity_name_properties[0]
   var entity_label = entity_name_properties[1]
-  fgd_model = " model(%s)" % JSON.stringify(fgd_model.default_value) if fgd_model else ""
+  fgd_model = " model(%s)" % JSON.stringify(fgd_model) if fgd_model else ""
 
   var entity = "@PointClass size(-%s -%s -%s, %s %s %s) color%s%s = %s : \"%s\" [\n" % [
     fgd_size, fgd_size, fgd_size,
@@ -186,18 +200,25 @@ func create_entity(path, properties = []):
   # Body
   # Example: energy(float) : "Energy" : 1 : "The light's strengh multiplier"
   for property in properties:
-    if property.name.begins_with("fgd_"):
+    if property.name.begins_with("fgd_") or property.name in fgd_block:
       continue
     
-    entity += "%s(%s) : \"%s\" : %s" % [
-      property.name if property.name else "unnamed",
-      type_converter(property.type) if property.type else 4,
-      string_to_title_case(property.name) if property.name else "",
-      value_converter(property.type, property.default_value) if property.default_value else "",
-    ]
+    if property.type in [27]: # Flags
+      entity += "  %s(%s) = %s" % [
+        property.name if property.name else "unnamed",
+        type_converter(property.type) if property.type else 4,
+        value_converter(property.type, property.default_value) if property.default_value else "",
+      ]
+    else:
+      entity += "  %s(%s) : \"%s\" : %s" % [
+        property.name if property.name else "unnamed",
+        type_converter(property.type) if property.type else 4,
+        string_to_title_case(property.name) if property.name else "",
+        value_converter(property.type, property.default_value) if property.default_value else "",
+      ]
 
-    if property.type not in [28]:
-      entity += " : \"%s\"" % property.hint_string if property.hint_string else ""
+      if property.type not in [28]: # Array
+        entity += " : \"%s\"" % property.hint_string if property.hint_string else ""
     
     entity += "\n"
 
@@ -215,5 +236,6 @@ func _init():
   for property in properties:
     if property:
       file.store_string(property)
-      
+  
+  print("Game.fgd created successfully!")
   quit()
