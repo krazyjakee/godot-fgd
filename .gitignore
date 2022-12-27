@@ -1,3 +1,4 @@
 ﻿.godot
 .env
 .DS_Store
+examples/autosave

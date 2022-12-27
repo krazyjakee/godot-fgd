@@ -6,7 +6,7 @@ extends Node3D
 
 @export var fgd_model = {
   "path": "entities/models/sphere.gltf",
-  "scale": initial_scale,
+  "scale": initial_scale
 }
 
 func _physics_process(_delta):

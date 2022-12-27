@@ -9,6 +9,11 @@ _string(string) : "String" : "string" : "String"
 _int(integer) : "Int" : 1 : "int"
 _float(float) : "Float" : 2 : "float"
 _color(color) : "Color" : "1 1 1" : "Color"
+_choice(choices) : "Choice" : 0 = [
+0 : "one"
+1 : "two"
+2 : "three"
+]
 ]
 
 @PointClass size(-4 -4 -4, 4 4 4) color(0 255 0) model({"path":"entities/models/sphere.gltf","scale":5}) = models_sphere : "Models" [

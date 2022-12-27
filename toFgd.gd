@@ -95,6 +95,7 @@ func type_converter(type: int):
     3: "float",
     4: "string",
     20: "color",
+    28: "choices"
   }
   return types[type] if type in types else "string"
 
@@ -106,6 +107,13 @@ func value_converter(type: int, value: Variant):
     return "1" if value else "0"
   elif type == 20:
     return "\"%s %s %s\"" % [value.r, value.g, value.b]
+  elif type == 28: # Array (but only string array is supported)
+    var fgd_values = []
+    for i in value.size():
+      var v = value[i]
+      fgd_values.append("%s : \"%s\"\n" % [i, v])
+    
+    return "0 = [\n%s]" % "".join(PackedStringArray(fgd_values))
   else:
     return value
 
@@ -180,14 +188,18 @@ func create_entity(path, properties = []):
   for property in properties:
     if property.name.begins_with("fgd_"):
       continue
-
-    entity += "%s(%s) : \"%s\" : %s : %s\n" % [
+    
+    entity += "%s(%s) : \"%s\" : %s" % [
       property.name if property.name else "unnamed",
       type_converter(property.type) if property.type else 4,
       string_to_title_case(property.name) if property.name else "",
       value_converter(property.type, property.default_value) if property.default_value else "",
-      "\"%s\"" % property.hint_string if property.hint_string else ""
     ]
+
+    if property.type not in [28]:
+      entity += " : \"%s\"" % property.hint_string if property.hint_string else ""
+    
+    entity += "\n"
 
   # Footer
   entity += "]\n\n"
