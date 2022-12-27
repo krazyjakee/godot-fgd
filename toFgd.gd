@@ -1,6 +1,6 @@
 extends SceneTree
 
-func get_files(entities_dir = "entities"):
+func get_files(entities_dir):
   # Define the root directory to search
   var root_dir = "res://%s" % entities_dir
   var dir = DirAccess.open(root_dir)
@@ -227,8 +227,8 @@ func create_entity(path, properties = []):
 
   return entity
 
-func build():
-  var all_files = get_files() # Get all .gd and .tscn files in the entity folder
+func build(entities_dir = "entities"):
+  var all_files = get_files(entities_dir) # Get all .gd and .tscn files in the entity folder
   var files = remove_attached_scripts(all_files) # Remove attached scripts
   var properties = get_entity_properties(files) # Get the properties of each entity
 
@@ -237,7 +237,7 @@ func build():
     if property:
       file.store_string(property)
 
+  print("Game.fgd created successfully!")
+
 func _init():
   build()
-  print("Game.fgd created successfully!")
-  quit()

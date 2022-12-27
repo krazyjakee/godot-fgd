@@ -41,3 +41,7 @@ Different variable types will have different controls in Trenchbroom.
 
 - Make sure the model actually exists
 - Make sure you have set the game path in Trenchbroom settings.
+
+## Attempt to call function 'list_dir_begin' in base 'null instance' on a null instance.
+
+- Make sure the entities folder exists and that it is configured correctly in tbloader.
