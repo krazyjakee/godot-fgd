@@ -20,13 +20,3 @@
 "origin" "-44 4 36"
 "initial_scale" "1"
 }
-// entity 2
-{
-"classname" "other_script_only"
-"origin" "-12 -44 20"
-"_color" "1 1 1"
-"_bool" "1"
-"_float" "2"
-"_int" "1"
-"_string" "string"
-}

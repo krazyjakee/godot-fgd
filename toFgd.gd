@@ -29,18 +29,14 @@ func remove_attached_scripts(files):
   var filtered_files = []
   var attached_scripts = []
 
-  print(files)
-
   # Find all attached scripts
   for file in files:
     if file.ends_with(".tscn"):
       var scene = load(file)
-      var script = scene.get_script() # TODO: Returning null. Need to fix it.
-      print(script)
-      if script:
-        attached_scripts.append(script)
-
-  print(attached_scripts)
+      var instance = scene.instantiate()
+      var script = instance.get_script()
+      if script: attached_scripts.append(script.get_path().replace("res://", ""))
+      instance.queue_free()
   
   # Remove attached scripts from the list
   for file in files:
@@ -65,9 +61,13 @@ func get_entity_properties(files = []):
 func scene_loader(path):
   var properties = []
   var scene = load(path)
-  var script = scene.get_script()
-  if script: properties = script_loader(script)
-  # TODO: Change the name of the entity to the name of the scene
+  var instance = scene.instantiate()
+  var script = instance.get_script()
+  if script:
+    properties = script_loader(script.get_path())
+    var parsed_path = path_parser(path)
+    properties = set_property_by_name("name", parsed_path[0], properties)
+  instance.queue_free()
   return properties
 
 func script_loader(path):
@@ -94,7 +94,7 @@ func type_converter(type: int):
     2: "integer",
     3: "float",
     4: "string",
-    20: "color255",
+    20: "color",
   }
   return types[type] if type in types else "string"
 
@@ -115,6 +115,13 @@ func get_property_by_name(name, properties = [], default_value = null):
     if property.name == name:
       return property
   return default_value
+
+func set_property_by_name(name, value, properties = []):
+  # Set the properties by name
+  for i in properties.size():
+    if properties[i].name == name:
+      properties[i][name] = value
+  return properties
 
 func path_parser(raw_path):
   var regex = RegEx.new()
