@@ -29,13 +29,18 @@ func remove_attached_scripts(files):
   var filtered_files = []
   var attached_scripts = []
 
+  print(files)
+
   # Find all attached scripts
   for file in files:
     if file.ends_with(".tscn"):
-      var scene = load(path)
-      var script = scene.get_script()
+      var scene = load(file)
+      var script = scene.get_script() # TODO: Returning null. Need to fix it.
+      print(script)
       if script:
         attached_scripts.append(script)
+
+  print(attached_scripts)
   
   # Remove attached scripts from the list
   for file in files:
