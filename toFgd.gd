@@ -227,7 +227,7 @@ func create_entity(path, properties = []):
 
   return entity
 
-func _init():
+func build():
   var all_files = get_files() # Get all .gd and .tscn files in the entity folder
   var files = remove_attached_scripts(all_files) # Remove attached scripts
   var properties = get_entity_properties(files) # Get the properties of each entity
@@ -236,6 +236,8 @@ func _init():
   for property in properties:
     if property:
       file.store_string(property)
-  
+
+func _init():
+  build()
   print("Game.fgd created successfully!")
   quit()
