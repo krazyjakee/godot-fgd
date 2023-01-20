@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://x52lgi7yoq7u"]
+[gd_scene load_steps=4 format=3 uid="uid://x52lgi7yoq7u"]
 
 [ext_resource type="PackedScene" uid="uid://c5d1pvp3im0b2" path="res://entities/models/sphere.tscn" id="1_5sgh3"]
-[ext_resource type="Script" path="res://entities/models/sphere_script.gd" id="2_v5h7w"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_n011d"]
 _surfaces = [{
@@ -33,9 +32,8 @@ mesh = SubResource("ArrayMesh_n011d")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TBLoader/Default Layer/entity_0_geometry_col"]
 shape = SubResource("ConcavePolygonShape3D_v8st4")
 
-[node name="sphere" type="Node3D" parent="TBLoader" instance=ExtResource("1_5sgh3")]
-transform = Transform3D(-3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, 0.25, 2.25, -2.75)
-script = ExtResource("2_v5h7w")
+[node name="sphere" parent="TBLoader" instance=ExtResource("1_5sgh3")]
+transform = Transform3D(-3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0.25, 2.25, -2.75)
 initial_scale = 3.0
 fgd_model = {
 "path": "entities/models/sphere.gltf",

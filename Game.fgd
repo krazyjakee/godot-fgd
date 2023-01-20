@@ -24,5 +24,14 @@
     4 : "three" : 1
   ]
   c(integer) : "C" : 1 : "int"
+  _bool_nd(bool) : "Bool Nd" : 0 : "bool"
+  _string_nd(string) : "String Nd" : "" : "String"
+  _int_nd(integer) : "Int Nd" : 0 : "int"
+  _float_nd(float) : "Float Nd" : 0 : "float"
+  _color_nd(color) : "Color Nd" : "0 0 0" : "Color"
+  _choice_nd(choices) : "Choice Nd" : 0 = [
+  ]
+  _flags_nd(flags) = [
+  ]
 ]
 
