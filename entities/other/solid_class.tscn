@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://3h8pbily1b34"]
+
+[ext_resource type="Script" path="res://entities/other/solid_class.gd" id="1_wdqbc"]
+
+[node name="solid_class" type="Node3D"]
+script = ExtResource("1_wdqbc")
