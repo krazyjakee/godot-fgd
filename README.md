@@ -18,6 +18,7 @@ The script will process all .tscn and .gd files in the entities folder. It will 
 
 When exporting these variables, they will be used to configure the entity for use with Trenchbroom.
 
+- `fgd_solid` - Whether the entity is a SolidClass/Brush or not. i.e `true`
 - `fgd_size` - The scale factor for the entity in trenchbroom. i.e `4`
 - `fgd_color` - The color of the entity in trenchbroom. i.e `0 255 0` (yellow)
 - `fgd_model` - The model settings for the entity in trenchbroom. See an [example here](https://github.com/krazyjakee/godot-fgd/blob/main/entities/models/sphere_script.gd#L7).
